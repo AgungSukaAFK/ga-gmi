@@ -101,7 +101,7 @@ export default function WithSidebar({ children }: WithSidebarProps) {
               </div>
             </header>
             <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-              <div className="grid auto-rows-min grid-cols-12 gap-4 md:gap-6">
+              <div className="grid grid-cols-12 items-start gap-4 md:gap-6 auto-rows-auto">
                 {children}
               </div>
             </div>

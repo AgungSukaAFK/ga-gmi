@@ -38,15 +38,12 @@ export async function signIn(dto: SignIn): Promise<boolean> {
   }
 
   try {
-    // Use signInWithEmailAndPassword for email/password authentication
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
     const user = userCredential.user;
-
-    // Fetch user data from Firestore
 
     const q = query(UserCollection, where("email", "==", user.email));
     const userDoc = await getDocs(q);
@@ -57,20 +54,20 @@ export async function signIn(dto: SignIn): Promise<boolean> {
   } catch (error: any) {
     let errorMessage = "Gagal melakukan sign in.";
     if (
-      error.code === "auth/user-not-found" ||
-      error.code === "auth/wrong-password"
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/invalid-credential"
     ) {
       errorMessage = "Email atau password salah.";
+    } else if (error.code === "auth/user-not-found") {
+      errorMessage = "Email belum terdaftar.";
     } else if (error.code === "auth/invalid-email") {
       errorMessage = "Format email tidak valid.";
     } else if (error.code === "auth/too-many-requests") {
       errorMessage = "Terlalu banyak percobaan login. Coba lagi nanti.";
     }
-    // Jika bukan error Firebase Auth, gunakan pesan aslinya
+
     throw new Error(errorMessage || error.message);
   }
-
-  return false;
 }
 
 export async function signInWithGoogle(): Promise<boolean> {
@@ -85,12 +82,10 @@ export async function signInWithGoogle(): Promise<boolean> {
     const q = query(UserCollection, where("email", "==", user.email));
     const userDocSnap = await getDocs(q);
 
-    // Jika user sudah terdaftar di Firestore
     if (!userDocSnap.empty) {
-      return true; // User sudah ada, tidak perlu menambahkan lagi
+      return true;
     }
 
-    // Jika user belum terdaftar di Firestore (ini adalah Sign Up pertama kali dengan Google)
     const userData: Omit<UserDb, "id"> = {
       email: user.email,
       nama: user.displayName || "Anonymous",
@@ -104,12 +99,10 @@ export async function signInWithGoogle(): Promise<boolean> {
       updated_at: serverTimestamp(),
     };
 
-    const newDocRef = await addDoc(UserCollection, userData);
-    console.log("New user added to Firestore:", newDocRef.id);
+    await addDoc(UserCollection, userData);
 
     return true;
   } catch (error: any) {
-    // Tangani error spesifik dari Firebase Auth
     let errorMessage = "Gagal melakukan sign in dengan Google.";
     if (error.code === "auth/popup-closed-by-user") {
       errorMessage = "Proses sign in dibatalkan oleh pengguna.";
@@ -131,7 +124,6 @@ export async function registerUser(dto: Register) {
     throw new Error("All fields are required");
   }
 
-  // Cek email di DB
   const q = query(UserCollection, where("email", "==", email));
   const userDoc = await getDocs(q);
   if (!userDoc.empty) {
@@ -145,9 +137,7 @@ export async function registerUser(dto: Register) {
       password
     );
     const user = userCredential.user;
-    console.log("User created:", user);
 
-    // Simpan data user ke Firestore
     const userData: Omit<UserDb, "id"> = {
       email,
       nama,
@@ -162,14 +152,11 @@ export async function registerUser(dto: Register) {
 
     await addDoc(UserCollection, userData);
 
-    // Kirim email verifikasi setelah pendaftaran
     await sendEmailVerification(user);
     toast.info(
       `Email verifikasi telah dikirim ke ${email}. Silakan periksa inbox Anda.`
     );
   } catch (error: any) {
-    // Tangkap error dari Firebase Auth
-    // Firebase Auth errors memiliki kode dan pesan yang bisa Anda gunakan
     let errorMessage = "Terjadi kesalahan saat pendaftaran.";
     if (error.code === "auth/email-already-in-use") {
       errorMessage = "Email ini sudah digunakan oleh akun lain.";
@@ -179,7 +166,7 @@ export async function registerUser(dto: Register) {
       errorMessage = "Password terlalu lemah (minimal 6 karakter).";
     }
     console.error("Error registering user:", error);
-    throw new Error(errorMessage); // Lempar error yang lebih user-friendly
+    throw new Error(errorMessage);
   }
 }
 
@@ -209,7 +196,6 @@ export async function getCurrentUser(): Promise<UserComplete | null> {
         const completedUser = userDoc.docs[0].data() as UserDb;
 
         if (user.emailVerified && completedUser.email_verified === false) {
-          // Update email_verified field in Firestore
           const userDocRef = userDoc.docs[0].ref;
           await updateDoc(userDocRef, {
             email_verified: true,
@@ -223,7 +209,6 @@ export async function getCurrentUser(): Promise<UserComplete | null> {
           completedUser.lokasi === "unassigned"
         ) {
           if (window.location.pathname !== "/unassigned") {
-            console.log(window.location.pathname);
             window.location.href = "/unassigned";
           }
         }
@@ -254,7 +239,7 @@ export async function resendVerificationEmail() {
   const user = auth.currentUser;
   if (user) {
     await sendEmailVerification(user);
-    return true; // Berhasil mengirim ulang
+    return true;
   }
   throw new Error("Tidak ada pengguna yang login.");
 }
@@ -262,7 +247,7 @@ export async function resendVerificationEmail() {
 export async function checkEmailVerificationStatus() {
   const user = auth.currentUser;
   if (user) {
-    await reload(user); // Memaksa refresh status user dari Firebase
+    await reload(user);
     return user.emailVerified;
   }
   return false;
@@ -275,7 +260,7 @@ export async function resetPasswordByEmail(email: string) {
 
   try {
     await sendPasswordResetEmail(auth, email);
-    return true; // Berhasil mengirim email reset password
+    return true;
   } catch (error: any) {
     let errorMessage = "Gagal mengirim email reset password.";
     if (error.code === "auth/user-not-found") {

@@ -13,9 +13,10 @@ import { formatTanggal } from "@/lib/utils";
 type DatePickerProps = {
   value?: Date;
   onChange?: Dispatch<Date | undefined>;
+  placeholder?: string;
 };
 
-export function DatePicker({ value, onChange }: DatePickerProps) {
+export function DatePicker({ value, onChange, placeholder }: DatePickerProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,6 +30,8 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           >
             {value
               ? formatTanggal(value.toLocaleDateString("id-ID"))
+              : placeholder
+              ? placeholder
               : "Pilih tanggal"}
             <ChevronDownIcon />
           </Button>

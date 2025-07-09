@@ -4,15 +4,14 @@ import {
   BaggageClaim,
   BookOpen,
   Bot,
+  Boxes,
   Command,
   FileBox,
   GalleryVerticalEnd,
   Info,
   LayoutDashboard,
-  PackageOpen,
+  MessageSquareShare,
   Settings2,
-  ShoppingCart,
-  Truck,
   Warehouse,
 } from "lucide-react";
 
@@ -66,29 +65,19 @@ const data = {
       icon: FileBox,
     },
     {
-      title: "Purchase Request",
-      url: "/purchase-request",
-      icon: ShoppingCart,
-    },
-    {
       title: "Purchase Order",
       url: "/purchase-order",
       icon: BaggageClaim,
     },
     {
-      title: "Receive Item",
-      url: "/receive-item",
-      icon: PackageOpen,
+      title: "Barang",
+      url: "/barang",
+      icon: Boxes,
     },
     {
-      title: "Barang dan Stok",
-      url: "/barang-dan-stok",
+      title: "Vendor",
+      url: "/vendor",
       icon: Warehouse,
-    },
-    {
-      title: "Delivery",
-      url: "/delivery",
-      icon: Truck,
     },
     {
       title: "Setting",
@@ -101,6 +90,11 @@ const data = {
       title: "Dokumentasi",
       url: "/dokumentasi",
       icon: BookOpen,
+    },
+    {
+      title: "Feedback",
+      url: "/feedback",
+      icon: MessageSquareShare,
     },
     {
       title: "Tentang App",

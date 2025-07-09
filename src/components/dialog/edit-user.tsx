@@ -39,7 +39,6 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
     const nama = formData.get("nama") as string;
     const role = formData.get("role") as string;
     const lokasi = formData.get("lokasi") as string;
-    console.log(formData);
     if (!nama) {
       toast.warning("Nama tidak boleh kosong");
       return;
