@@ -60,7 +60,7 @@ export default function Login() {
           className="absolute inset-0 h-full w-full object-cover brightness-40"
         />
         <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] select-none flex flex-col gap-4 items-center justify-center text-6xl font-extrabold text-white">
-          <h1>WAREHOUSE</h1>
+          <h1>MR & PO</h1>
           <h1>MANAGEMENT</h1>
           <h1>SYSTEM</h1>
         </div>
