@@ -91,7 +91,7 @@ export default function WithSidebar({ children }: WithSidebarProps) {
                   <BreadcrumbList>
                     <BreadcrumbItem className="hidden md:block">
                       <BreadcrumbLink href="/dashboard">
-                        MR & PO - GA GMI
+                        Garuda Procure
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator className="hidden md:block" />
@@ -134,7 +134,7 @@ function SkeletonContent() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="/dashboard">
-                    MR & PO - GA GMI
+                    Garuda Procure
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />

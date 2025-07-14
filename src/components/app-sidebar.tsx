@@ -1,11 +1,9 @@
 import * as React from "react";
 import {
-  AudioWaveform,
   BaggageClaim,
   BookOpen,
   Bot,
   Boxes,
-  Command,
   FileBox,
   GalleryVerticalEnd,
   Info,
@@ -17,7 +15,6 @@ import {
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -34,16 +31,6 @@ const data = {
       name: "Lourdes Autoparts",
       logo: GalleryVerticalEnd,
       plan: "Versi 1.0.0",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
     },
   ],
   navAdmin: [
@@ -123,7 +110,9 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div>
+          <img src="lourdes.png" alt="lourdes.png" className="drop-shadow-md" />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         {user.role === "admin" && (
