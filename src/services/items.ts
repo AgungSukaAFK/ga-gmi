@@ -4,13 +4,17 @@ import { PagingSize } from "@/types/enum";
 import {
   deleteDoc,
   doc,
+  endBefore,
+  getCountFromServer,
   getDoc,
   getDocs,
   limit,
+  limitToLast,
   orderBy,
   query,
   serverTimestamp,
   setDoc,
+  startAfter,
 } from "firebase/firestore";
 
 const collName = "items";
@@ -75,6 +79,34 @@ export async function getItems() {
     orderBy("created_at", "desc")
   );
   const itemSnap = await getDocs(q);
-  console.log("Fetched items:", itemSnap.docs);
+  return itemSnap.docs.map((doc) => doc.data() as Item);
+}
+
+export async function countItems(): Promise<number> {
+  const snap = await getCountFromServer(ItemCollection);
+  return snap.data().count;
+}
+
+export async function getItemsAfter(id: string): Promise<Item[]> {
+  const document = await getDoc(doc(db, collName, id));
+  const q = query(
+    ItemCollection,
+    orderBy("created_at", "desc"),
+    startAfter(document),
+    limit(PagingSize)
+  );
+  const itemSnap = await getDocs(q);
+  return itemSnap.docs.map((doc) => doc.data() as Item);
+}
+
+export async function getItemsBefore(id: string): Promise<Item[]> {
+  const document = await getDoc(doc(db, collName, id));
+  const q = query(
+    ItemCollection,
+    orderBy("created_at", "desc"),
+    endBefore(document),
+    limitToLast(PagingSize)
+  );
+  const itemSnap = await getDocs(q);
   return itemSnap.docs.map((doc) => doc.data() as Item);
 }

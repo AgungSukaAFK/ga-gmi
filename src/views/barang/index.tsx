@@ -11,8 +11,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getCurrentUser } from "@/services/auth";
-import { deleteItem, getItems } from "@/services/items";
+import {
+  countItems,
+  deleteItem,
+  getItems,
+  getItemsAfter,
+  getItemsBefore,
+} from "@/services/items";
 import type { Item, UserComplete } from "@/types";
+import { PagingSize } from "@/types/enum";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -21,10 +28,14 @@ export default function Barang() {
   const [data, setData] = useState<Item[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [user, setUser] = useState<UserComplete | null>(null);
+  const [totalData, setTotalData] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     async function fetchData() {
       const res = await getItems();
+      const count = await countItems();
+      setTotalData(count);
       setData(res);
     }
 
@@ -60,9 +71,36 @@ export default function Barang() {
       setLoading(false);
     }
   }
+  async function nextPage() {
+    setPage((prev) => prev + 1);
+    const res = await getItemsAfter(data[-1].part_number);
+    setData(res);
+  }
+  async function prevPage() {
+    setPage((prev) => prev - 1);
+    const res = await getItemsBefore(data[0].part_number);
+    setData(res);
+  }
   return (
     <WithSidebar>
-      <Content>
+      <Content
+        cardFooter={
+          <div className="flex gap-4 items-center">
+            <Button disabled={page === 1} onClick={prevPage}>
+              Sebelumnya
+            </Button>
+            <p>
+              Halaman {page} dari {Math.ceil(totalData / PagingSize)}
+            </p>
+            <Button
+              disabled={page === Math.ceil(totalData / PagingSize)}
+              onClick={nextPage}
+            >
+              Selanjutnya
+            </Button>
+          </div>
+        }
+      >
         <Table>
           <TableHeader>
             <TableRow>
