@@ -73,7 +73,7 @@ export default function Barang() {
   }
   async function nextPage() {
     setPage((prev) => prev + 1);
-    const res = await getItemsAfter(data[-1].part_number);
+    const res = await getItemsAfter(data[data.length - 1].part_number);
     setData(res);
   }
   async function prevPage() {

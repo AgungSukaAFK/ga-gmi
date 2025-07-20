@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 export default function TambahBarang() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [pn, setPn] = useState<string>("");
 
   async function tambahBarang(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -23,14 +24,14 @@ export default function TambahBarang() {
     try {
       setLoading(true);
       await createItem({
-        part_name,
-        part_number,
-        category,
-        uom,
-        vendor,
+        part_name: part_name.trim(),
+        part_number: part_number.trim(),
+        category: category.trim(),
+        uom: uom.trim(),
+        vendor: vendor.trim(),
       });
       toast.success("Barang berhasil ditambahkan");
-      form.reset();
+      // form.reset();
     } catch (error) {
       toast.error("Gagal menambahkan barang: " + error);
     } finally {
@@ -62,7 +63,13 @@ export default function TambahBarang() {
           {/* Part Number */}
           <div className="flex flex-col gap-2 col-span-12 md:col-span-6">
             <label htmlFor="part_number">Part Number</label>
-            <Input type="text" name="part_number" required />
+            <Input
+              type="text"
+              name="part_number"
+              value={pn}
+              onChange={(e) => setPn(e.target.value.toUpperCase())}
+              required
+            />
           </div>
           {/* Part Name */}
           <div className="flex flex-col gap-2 col-span-12 md:col-span-6">
