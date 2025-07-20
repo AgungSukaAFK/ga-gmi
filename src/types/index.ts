@@ -8,6 +8,7 @@ export interface UserDb {
   nama: string;
   role: string;
   lokasi: string;
+  department: string;
   email_verified: boolean;
   auth_provider: AuthProvider;
   image_url: string;
@@ -21,6 +22,7 @@ export interface UserComplete extends User {
   nama: string;
   role: string;
   lokasi: string;
+  department: string;
   email_verified: boolean;
   auth_provider: AuthProvider;
   image_url: string;
@@ -29,33 +31,43 @@ export interface UserComplete extends User {
 }
 
 export interface MaterialRequest {
-  id?: string; // Sekaligus kode
+  id?: string;
   category: string;
   status: string;
   remarks: string;
   cost_estimation: number;
   user: string; // user.email
   department: string;
+  approval: MRApproval[];
   created_at: Timestamp | FieldValue;
   updated_at: Timestamp | FieldValue;
 }
 
 export interface MRApproval {
-  mr_id: string;
   type: string;
   status: string;
   user: string; // user.email
   created_at: Timestamp | FieldValue;
   updated_at: Timestamp | FieldValue;
 }
-
 export interface Logs {
   id?: string;
   user: string; // user.email
-  type: string;
+  type: string; // Based on LogType
   title: string;
   description: string;
   link?: string;
+  created_at: Timestamp | FieldValue;
+  updated_at: Timestamp | FieldValue;
+}
+
+export interface Item {
+  id?: string;
+  part_number: string;
+  part_name: string;
+  category: string;
+  uom: string;
+  vendor: string;
   created_at: Timestamp | FieldValue;
   updated_at: Timestamp | FieldValue;
 }

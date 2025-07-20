@@ -24,6 +24,7 @@ export const db = getFirestore(app);
 // Firestore collections
 export const UserCollection = collection(db, "users");
 export const MRCollection = collection(db, "material_requests");
+export const POCollection = collection(db, "purchase_orders");
 export const VendorCollection = collection(db, "vendors");
 export const ItemCollection = collection(db, "items");
 export const LogCollection = collection(db, "logs");

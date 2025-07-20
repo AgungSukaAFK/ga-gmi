@@ -97,6 +97,7 @@ export async function signInWithGoogle(): Promise<boolean> {
         user.photoURL || generateAvatarUrl(user.displayName || user.email),
       created_at: serverTimestamp(),
       updated_at: serverTimestamp(),
+      department: "unassigned",
     };
 
     await addDoc(UserCollection, userData);
@@ -148,6 +149,7 @@ export async function registerUser(dto: Register) {
       image_url: user.photoURL || generateAvatarUrl(nama),
       created_at: serverTimestamp(),
       updated_at: serverTimestamp(),
+      department: "unassigned",
     };
 
     await addDoc(UserCollection, userData);

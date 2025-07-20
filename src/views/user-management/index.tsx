@@ -190,6 +190,7 @@ export default function UserManagement() {
                   <th className="p-2">Nama</th>
                   <th className="p-2">Email</th>
                   <th className="p-2">Role</th>
+                  <th className="p-2">Department</th>
                   <th className="p-2">Lokasi</th>
                   <th className="p-2">Email Verified</th>
                   <th className="p-2">Provider</th>
@@ -205,6 +206,7 @@ export default function UserManagement() {
                     <td className="p-2">{user.nama}</td>
                     <td className="p-2">{user.email}</td>
                     <td className="p-2">{user.role}</td>
+                    <td className="p-2">{user.department}</td>
                     <td className="p-2">{user.lokasi}</td>
                     <td className="p-2">
                       {user.email_verified ? "Verified" : "Not Verified"}

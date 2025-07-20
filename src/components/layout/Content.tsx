@@ -51,9 +51,14 @@ export function Content({
   return (
     <Card id={id} className={cn("col-span-12", colClass, className)}>
       {(title || description || cardAction) && (
-        <CardHeader>
-          {title && <CardTitle>{title}</CardTitle>}
-          {description && <CardDescription>{description}</CardDescription>}
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            {title && <CardTitle>{title}</CardTitle>}
+            {description && (
+              <CardDescription className="mt-1">{description}</CardDescription>
+            )}
+          </div>
+
           {cardAction && <CardAction>{cardAction}</CardAction>}
         </CardHeader>
       )}

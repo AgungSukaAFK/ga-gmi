@@ -24,7 +24,7 @@ import {
 import { toast } from "sonner";
 import { updateUser } from "@/services/user";
 import type { Dispatch, SetStateAction } from "react";
-import { LokasiList } from "@/types/enum";
+import { LokasiList, UserDepartment, UserRole } from "@/types/enum";
 
 interface MyDialogProps {
   onSubmit?: () => void;
@@ -38,6 +38,7 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
     const formData = new FormData(event.currentTarget);
     const nama = formData.get("nama") as string;
     const role = formData.get("role") as string;
+    const department = formData.get("department") as string;
     const lokasi = formData.get("lokasi") as string;
     if (!nama) {
       toast.warning("Nama tidak boleh kosong");
@@ -52,7 +53,12 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
       return;
     }
 
-    if (nama === user.nama && role === user.role && lokasi === user.lokasi) {
+    if (
+      nama === user.nama &&
+      role === user.role &&
+      department === user.department &&
+      lokasi === user.lokasi
+    ) {
       toast.warning("Tidak ada perubahan yang dilakukan");
       return;
     }
@@ -62,6 +68,7 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
       const res = await updateUser({
         nama,
         role,
+        department,
         lokasi,
         id: user.id,
       });
@@ -91,10 +98,12 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
         </DialogHeader>
         <form onSubmit={handleSubmit} id="edit-user-form">
           <div className="grid gap-4">
+            {/* Nama */}
             <div className="grid gap-3">
               <Label htmlFor="name">Nama</Label>
               <Input id="name" name="nama" defaultValue={user.nama} />
             </div>
+            {/* Email */}
             <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -104,30 +113,55 @@ export function EditUserDialog({ user, refresh }: MyDialogProps) {
                 defaultValue={user.email}
               />
             </div>
+            {/* Role */}
             <div className="grid gap-3">
               <Label htmlFor="role">Role</Label>
-              <Select name="role" required>
+              <Select name="role" required defaultValue={user.role}>
                 <SelectTrigger className="w-full" name="role" id="role">
-                  <SelectValue placeholder={user.role} />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Daftar Role</SelectLabel>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="warehouse">Warehouse</SelectItem>
-                    <SelectItem value="purchasing">Purchasing</SelectItem>
-                    <SelectItem value="logistik">Logistik</SelectItem>
-                    <SelectItem value="user">User</SelectItem>
-                    <SelectItem value="unassigned">Unassigned</SelectItem>
+                    {UserRole.map((role) => (
+                      <SelectItem value={role}>{role}</SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
+            {/* Department */}
+            <div className="grid gap-3">
+              <Label htmlFor="department">Department</Label>
+              <Select name="department" required defaultValue={user.department}>
+                <SelectTrigger
+                  className="w-full"
+                  name="department"
+                  id="department"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Daftar Departemen</SelectLabel>
+                    {UserDepartment.map((department) => (
+                      <SelectItem value={department}>{department}</SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            {/* Lokasi */}
             <div className="grid gap-3">
               <Label htmlFor="lokasi">Lokasi</Label>
-              <Select required name="lokasi">
-                <SelectTrigger className="w-full" name="lokasi" id="lokasi">
-                  <SelectValue placeholder={user.lokasi} />
+              <Select required name="lokasi" defaultValue={user.lokasi}>
+                <SelectTrigger
+                  className="w-full"
+                  name="lokasi"
+                  id="lokasi"
+                  defaultValue={user.lokasi}
+                >
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>

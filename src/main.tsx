@@ -17,14 +17,15 @@ import ForgetPassword from "./views/forget-password/index.tsx";
 import MaterialRequest from "./views/material-request/index.tsx";
 import PurchaseOrder from "./views/purchase-order/index.tsx";
 import Barang from "./views/barang/index.tsx";
-import Vendor from "./views/vendor/index.tsx";
 import Docs from "./views/docs/index.tsx";
 import Feedback from "./views/feedback/index.tsx";
+import TambahBarang from "./views/tambah-barang/index.tsx";
+import { ConfirmDialog } from "./components/confirm-dialog.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Toaster richColors closeButton theme="system" />
-
+    <ConfirmDialog />
     <BrowserRouter>
       <Routes>
         {/* AUTH */}
@@ -53,7 +54,7 @@ createRoot(document.getElementById("root")!).render(
 
         <Route path="/barang" element={<Barang />} />
 
-        <Route path="/vendor" element={<Vendor />} />
+        <Route path="/tambah-barang" element={<TambahBarang />} />
 
         <Route path="/setting" element={<Setting />} />
 

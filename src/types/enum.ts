@@ -1,10 +1,21 @@
-export type UserRole =
-  | "warehouse"
-  | "purchasing"
-  | "logistik"
-  | "user"
-  | "admin"
-  | "unassigned";
+export const UserRole = ["admin", "requester", "approver"];
+
+export const UserDepartment = [
+  "General Affair",
+  "Marketing",
+  "Manufacture",
+  "K3",
+  "Finance",
+  "IT",
+  "Logistik",
+  "Purchasing",
+  "Warehouse",
+  "Service",
+  "General Manager",
+  "Executive Manager",
+  "Boards of Director",
+  "Unassigned",
+];
 
 export type AuthProvider = "credential" | "google";
 
@@ -14,7 +25,7 @@ export type Lokasi = {
 };
 
 export const LokasiList: Lokasi[] = [
-  { nama: "JAKARTA", kode: "JKT" },
+  { nama: "HEAD OFFICE", kode: "HO" },
   { nama: "TANJUNG ENIM", kode: "ENIM" },
   { nama: "BALIKPAPAN", kode: "BPN" },
   { nama: "SITE BA", kode: "BA" },
@@ -27,7 +38,7 @@ export const LokasiList: Lokasi[] = [
   { nama: "unassigned", kode: "unassigned" },
 ];
 
-export type LogCategory =
+export type LogType =
   | "User Activity"
   | "Material Request"
   | "Purchase Request"

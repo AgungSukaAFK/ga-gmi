@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { isValid, parse } from "date-fns";
 import { Timestamp } from "firebase/firestore";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -58,4 +59,12 @@ export function formatTanggal(timestamp: number | string | Timestamp): string {
 export function generateAvatarUrl(name: string): string {
   const encodedName = encodeURIComponent(name.trim());
   return `https://ui-avatars.com/api/?name=${encodedName}&background=random&color=fff&bold=true`;
+}
+
+export function handleError(error: unknown) {
+  toast.error("Terjadi kesalahan");
+
+  if (window.location.hostname === "localhost") {
+    console.error("Error details:", error);
+  }
 }

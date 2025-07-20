@@ -55,9 +55,9 @@ export default function Login() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <img
-          src="/wh2.webp"
+          src="/login.webp"
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover brightness-40"
+          className="absolute inset-0 h-full w-full object-cover brightness-40 dark:grayscale"
         />
         <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] select-none flex flex-col gap-4 items-center justify-center text-6xl font-extrabold text-white">
           <h1>MR & PO</h1>

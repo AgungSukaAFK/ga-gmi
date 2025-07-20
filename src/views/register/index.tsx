@@ -65,7 +65,7 @@ export default function Register() {
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="bg-muted relative hidden lg:block">
         <img
-          src="/wh-1.webp"
+          src="/register.webp"
           alt="Image"
           className="mx-auto absolute inset-0 h-full w-full object-cover brightness-40 dark:grayscale"
         />

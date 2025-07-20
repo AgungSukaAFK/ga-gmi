@@ -1,33 +1,11 @@
 import React, { useState } from "react";
 import { FileText, Users, TrendingUp, ArrowRight, Menu } from "lucide-react";
-
-/*
- * CATATAN PENTING:
- * Agar kode ini berfungsi dengan benar, pastikan file `tailwind.config.js` Anda
- * sudah dikonfigurasi sesuai dengan dokumentasi instalasi shadcn/ui.
- * Warna seperti `primary`, `secondary`, `destructive`, `card`, `popover`,
- * `background`, `foreground`, `border`, `input`, dan `ring` harus sudah terdefinisi.
- *
- * Contoh: `bg-primary`, `text-primary-foreground`, `border-border`, dll.
- */
+import { Button } from "./components/ui/button";
 
 // Menambahkan tipe untuk props komponen
 interface DivProps extends React.HTMLAttributes<HTMLDivElement> {}
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {}
 interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | "default"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "destructive"
-    | "link";
-}
-
-// Komponen UI shadcn didefinisikan secara manual dengan variabel warna tematik.
-// Dalam proyek nyata, Anda akan menginstalnya dari 'shadcn/ui'.
 
 const Card: React.FC<DivProps> = ({ className, ...props }) => (
   <div
@@ -54,33 +32,6 @@ const CardDescription: React.FC<ParagraphProps> = ({ className, ...props }) => (
 const CardContent: React.FC<DivProps> = ({ className, ...props }) => (
   <div className={`p-6 pt-0 ${className}`} {...props} />
 );
-
-const Button: React.FC<ButtonProps> = ({
-  className,
-  variant = "default",
-  ...props
-}) => {
-  const baseClasses =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
-
-  const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-    outline:
-      "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-    link: "text-primary underline-offset-4 hover:underline",
-  };
-
-  return (
-    <button
-      className={`${baseClasses} ${variants[variant]} ${className}`}
-      {...props}
-    />
-  );
-};
 
 // Mendefinisikan tipe untuk objek di dalam array navLinks
 interface NavLink {
@@ -220,7 +171,8 @@ const App: React.FC = () => {
             <div className="mt-16 mx-auto max-w-5xl">
               <div className="rounded-xl bg-background shadow-2xl ring-1 ring-ring/10">
                 <img
-                  src="https://placehold.co/1200x680/E0E7FF/4F46E5?text=Dashboard+Aplikasi"
+                  // src="https://placehold.co/1200x680/E0E7FF/4F46E5?text=Dashboard+Aplikasi"
+                  src="/dashboard.png"
                   alt="[Tampilan dashboard aplikasi MR & PO]"
                   className="rounded-xl object-cover"
                   onError={(

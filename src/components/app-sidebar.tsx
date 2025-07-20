@@ -4,13 +4,13 @@ import {
   BookOpen,
   Bot,
   Boxes,
+  BoxesIcon,
   FileBox,
   GalleryVerticalEnd,
   Info,
   LayoutDashboard,
   MessageSquareShare,
   Settings2,
-  Warehouse,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -62,9 +62,9 @@ const data = {
       icon: Boxes,
     },
     {
-      title: "Vendor",
-      url: "/vendor",
-      icon: Warehouse,
+      title: "Tambah Barang",
+      url: "/tambah-barang",
+      icon: BoxesIcon,
     },
     {
       title: "Setting",
