@@ -4,6 +4,7 @@ import { PagingSize } from "@/types/enum";
 import {
   deleteDoc,
   doc,
+  endAt,
   endBefore,
   getCountFromServer,
   getDoc,
@@ -15,6 +16,7 @@ import {
   serverTimestamp,
   setDoc,
   startAfter,
+  startAt,
 } from "firebase/firestore";
 
 const collName = "items";
@@ -106,6 +108,20 @@ export async function getItemsBefore(id: string): Promise<Item[]> {
     orderBy("created_at", "desc"),
     endBefore(document),
     limitToLast(PagingSize)
+  );
+  const itemSnap = await getDocs(q);
+  return itemSnap.docs.map((doc) => doc.data() as Item);
+}
+
+export async function searchItemsByPartName(
+  queryText: string
+): Promise<Item[]> {
+  const q = query(
+    ItemCollection,
+    orderBy("part_name"),
+    startAt(queryText),
+    endAt(queryText + "\uf8ff"),
+    limit(PagingSize)
   );
   const itemSnap = await getDocs(q);
   return itemSnap.docs.map((doc) => doc.data() as Item);

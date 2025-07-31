@@ -31,7 +31,6 @@ export default function TambahBarang() {
         vendor: vendor.trim(),
       });
       toast.success("Barang berhasil ditambahkan");
-      // form.reset();
     } catch (error) {
       toast.error("Gagal menambahkan barang: " + error);
     } finally {

@@ -2,6 +2,7 @@ import { confirmDialog } from "@/components/confirm-dialog";
 import { Content } from "@/components/layout/Content";
 import WithSidebar from "@/components/layout/WithSidebar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -17,11 +18,14 @@ import {
   getItems,
   getItemsAfter,
   getItemsBefore,
+  searchItemsByPartName,
 } from "@/services/items";
 import type { Item, UserComplete } from "@/types";
 import { PagingSize } from "@/types/enum";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { toast } from "sonner";
+
+// TODO: Filter data
 
 export default function Barang() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -81,9 +85,43 @@ export default function Barang() {
     const res = await getItemsBefore(data[0].part_number);
     setData(res);
   }
+  async function handleSearch(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const searchTerm = formData.get("search") as string;
+    if (searchTerm === "") {
+      // Clear search
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await searchItemsByPartName(searchTerm.trim());
+      setData(res);
+    } catch (error) {
+      toast.error("Failed to search items: " + error);
+    } finally {
+      setLoading(false);
+    }
+
+    // TODO: Implement search functionality
+  }
+
   return (
     <WithSidebar>
       <Content
+        title="Data Barang"
+        cardAction={
+          <form
+            id="form-search-barang"
+            className="flex gap-2"
+            onSubmit={handleSearch}
+          >
+            <Input placeholder="Cari by Part Name" name="search" />
+            <Button type="submit" form="form-search-barang">
+              Cari
+            </Button>
+          </form>
+        }
         cardFooter={
           <div className="flex gap-4 items-center">
             <Button disabled={page === 1} onClick={prevPage}>
