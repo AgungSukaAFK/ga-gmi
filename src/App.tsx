@@ -270,10 +270,6 @@ const App: React.FC = () => {
               </p>
             </div>
             <div className="relative mt-16">
-              <div
-                className="absolute left-1/2 top-4 -ml-px h-[calc(100%-2rem)] w-0.5 bg-border hidden md:block"
-                aria-hidden="true"
-              ></div>
               <div className="grid gap-12 md:grid-cols-3">
                 {/* Step 1 */}
                 <div className="text-center">

@@ -149,7 +149,7 @@ export default function Dashboard() {
       </Content>
 
       {/* Tabel 50 Material Request terbaru */}
-      <Table>
+      <Table className="col-span-12">
         <TableHeader>
           <TableRow>
             <TableHead>No</TableHead>
